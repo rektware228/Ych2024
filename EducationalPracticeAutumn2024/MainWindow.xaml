@@ -41,7 +41,7 @@
                   Width="1800" Height="800" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="4" Columns="1"/>
+                    <UniformGrid Rows="100" Columns="1"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>

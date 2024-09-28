@@ -23,6 +23,13 @@ namespace EducationalPracticeAutumn2024
         public MainWindow()
         {
             InitializeComponent();
+            List<int> showlist = new List<int>();
+            for (int i = 0; i < 100; i++)
+            {
+                showlist.Add(i);
+            }
+
+            productLV.ItemsSource = showlist;
         }
     }
 }
