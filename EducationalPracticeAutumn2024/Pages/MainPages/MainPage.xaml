@@ -20,6 +20,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+
         <Image Source="/IMGResources/school_logo.png"
                Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="60"/>
 
