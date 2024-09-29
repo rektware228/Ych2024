@@ -1,5 +1,4 @@
-﻿using EducationalPracticeAutumn2024.Pages.MainPages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EducationalPracticeAutumn2024
+namespace EducationalPracticeAutumn2024.Pages.AdminPages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для NewPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NewPage : Page
     {
-        public MainWindow()
+        public NewPage()
         {
             InitializeComponent();
-
-            navigation_Frame.NavigationService.Navigate(new MainPage());
         }
     }
 }
