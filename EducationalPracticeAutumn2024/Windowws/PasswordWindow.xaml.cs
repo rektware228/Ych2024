@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using EducationalPracticeAutumn2024.Pages.AdminPages;
 
 namespace EducationalPracticeAutumn2024.Pages.MainPages
 {
@@ -28,7 +27,7 @@ namespace EducationalPracticeAutumn2024.Pages.MainPages
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (PasswordTextBox.Password == "0000") // Проверка пароля
+            if (PasswordTB.Password == "0000") // Проверка пароля
             {
                 this.DialogResult = true; // Успешный ввод пароля
                 this.Close();

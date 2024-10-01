@@ -31,7 +31,7 @@ namespace EducationalPracticeAutumn2024.Pages.MainPages
             if (passwordWindow.ShowDialog() == true) // Ожидаем результат
             {
                 // Если пароль введен правильно, переходим на новую страницу
-                NavigationService.Navigate(new Pages.AdminPages.NewPage());
+                NavigationService.Navigate(new Pages.AdminPages.ServicesPage());
             }
         }
     }
