@@ -27,14 +27,15 @@ namespace EducationalPracticeAutumn2024.Pages.MainPages
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (PasswordTB.Password == "0000") // Проверка пароля
+            if (PasswordTB.Password == "0000")
             {
-                this.DialogResult = true; // Успешный ввод пароля
+                this.DialogResult = true;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Неверный пароль! Попробуйте еще раз.");
+                MessageBox.Show("Неверный пароль! Попробуйте еще раз.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Stop);
+                PasswordTB.Password = "";
             }
         }
     }

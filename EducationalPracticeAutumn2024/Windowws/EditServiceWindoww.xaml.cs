@@ -29,12 +29,19 @@ namespace EducationalPracticeAutumn2024.Windowws
             contextservise = services;
             this.DataContext = this;
 
+            MainMG.Source = new BitmapImage(new Uri(services.MainImagePath, UriKind.Relative));
             NameServiceTB.Text = contextservise.Title;
             CostServiceTB.Text = contextservise.Cost.ToString();
             TimeServiceTB.Text = contextservise.DurationInSeconds.ToString();
             SaleServiceTB.Text = contextservise.Discount.ToString();
             DegrServiceTB.Text += contextservise.Description;
 
+        }
+
+        private void CancelBTN_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Вы действительно хотите выйти?", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            this.Close();
         }
     }
 }
