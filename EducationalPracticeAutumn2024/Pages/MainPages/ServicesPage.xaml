@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920" FontFamily="Comic Sans MS"
       Title=" ">
-
-    <Grid>
+    
+    <Grid Background="#E7FABF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="600"/>
             <ColumnDefinition/>
@@ -22,21 +22,59 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="SearchTbx"
-            FontSize="23" Grid.Column="0" Grid.Row="0"   
+        <TextBlock Text="📖 Услуги Learn School"
+                   Grid.Column="1" Grid.Row="0"
+                   FontSize="52"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 30, 0, 0"/>
+
+        <TextBox x:Name="SearchTB"
+            FontSize="23" Grid.Column="0" Grid.Row="2"   
             Background="White"
-            Width="500" Height="65"
-            VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            Width="530" Height="65"
+            VerticalAlignment="Top" Margin="30, 60, 0, 0" HorizontalAlignment="Left" >
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="20" BorderBrush="Black" BorderThickness="3" Background="White">
+                        <ScrollViewer Margin="10" x:Name="PART_ContentHost" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
 
-        <ComboBox x:Name="FiltrCb"
-                  Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"
-              Margin="0 100 0 0" FontSize="21"  Width="500" Height="65">
+
+        <ComboBox x:Name="SaleFLTRCB"
+                  Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                  Margin="30, 0, 0, 3"
+               FontSize="21"  Width="350" Height="65">
         </ComboBox>
 
-        <ComboBox x:Name="FiltrSaleCb"
-            Grid.Column="0" Grid.Row="1" FontSize="21"
-            Width="500" Height="65" VerticalAlignment="Top" Margin="30">
-        </ComboBox>
+
+        <Button x:Name="LargerBTN" Content="⬆"
+                FontSize="50" FontWeight="Light"
+                Grid.Column="0" Grid.Row="2"
+                Width="70" Height="70" Margin="280 0 0 3" VerticalAlignment="Bottom"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF"
+                >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="LessBTN" Content="⬇"
+                FontSize="50" FontWeight="Light"
+                Grid.Column="0" Grid.Row="2"
+                Width="70" Height="70" Margin="450 0 0 3" VerticalAlignment="Bottom"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF"
+                >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
 
         <ListView x:Name="ServicesLV" VerticalAlignment="Center"
                   Grid.Column="1" Grid.ColumnSpan="2" 
@@ -59,24 +97,17 @@
                                     </StackPanel>
 
                                     <StackPanel Orientation="Vertical" Width="850">
-                                        
+
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="100"/>
+                                                <RowDefinition Height="150"/>
                                                 <RowDefinition Height="50"/>
-                                                <RowDefinition Height="100"/>
+                                                <RowDefinition Height="50"/>
                                             </Grid.RowDefinitions>
 
                                             <TextBlock Grid.Row="0" Text="{Binding Title}" TextWrapping="Wrap" FontSize="35" Width="830" Height="100" Margin="20, 0"/>
                                             <TextBlock Grid.Row="1" Text="{Binding Cost}" TextWrapping="Wrap" FontSize="30" Width="830" Height="50" Margin="20, 0"/>
-
-                                            <Button Grid.Row="2" Content="редактировать"
-                                                    HorizontalAlignment="Left"
-                                                    Width="300" Height="45" Margin="20 0 0 0" FontSize="30"/>
-
-                                            <Button Grid.Row="2" Content="удалить"
-                                                    HorizontalAlignment="Left"
-                                                    Width="200" Height="45" Margin="350 0 0 0" FontSize="30"/>
+                                            <TextBlock Grid.Row="2" Text="*скидка" TextWrapping="Wrap" FontSize="30" Width="830" Height="50" Margin="20, 0"/>
 
                                         </Grid>
 
