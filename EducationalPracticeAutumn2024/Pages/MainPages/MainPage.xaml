@@ -28,7 +28,7 @@
                 FontSize="50" FontWeight="Light"
                 Grid.Column="2" Grid.Row="1"
                 Width="500" Height="100" Margin="0 0 0 100"
-                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" Click="ServicesPageBTN_Click"
                 >
             <Button.Resources>
                 <Style TargetType="Border">

@@ -137,11 +137,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\AdminPages\ServicesPage.xaml">
+    <Page Include="Pages\AdminPages\AdminServicesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ServicesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,11 +159,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\AdminPages\ServicesPage.xaml.cs">
-      <DependentUpon>ServicesPage.xaml</DependentUpon>
+    <Compile Include="Pages\AdminPages\AdminServicesPage.xaml.cs">
+      <DependentUpon>AdminServicesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ServicesPage.xaml.cs">
+      <DependentUpon>ServicesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windowws\EditServiceWindoww.xaml.cs">
       <DependentUpon>EditServiceWindoww.xaml</DependentUpon>

@@ -1,0 +1,33 @@
+﻿using EducationalPracticeAutumn2024.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace EducationalPracticeAutumn2024.Pages.MainPages
+{
+    /// <summary>
+    /// Логика взаимодействия для ServicesPage.xaml
+    /// </summary>
+    public partial class ServicesPage : Page
+    {
+        public static List<Service> services = new List<Service>();
+        public ServicesPage()
+        {
+            InitializeComponent();
+
+            services = new List<Service>(DBConnection.clientsServiceEntities.Service.ToList());
+            ServicesLV.ItemsSource = services;
+        }
+    }
+}

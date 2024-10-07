@@ -34,5 +34,10 @@ namespace EducationalPracticeAutumn2024.Pages.MainPages
                 NavigationService.Navigate(new Pages.AdminPages.ServicesPage());
             }
         }
+
+        private void ServicesPageBTN_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Pages.MainPages.ServicesPage());
+        }
     }
 }
