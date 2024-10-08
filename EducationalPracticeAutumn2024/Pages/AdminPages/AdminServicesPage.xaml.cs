@@ -185,12 +185,19 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
 
         private void DeliteServiceBNT_Click(object sender, RoutedEventArgs e) //Удалить
         {
-            if (sender is Button button && button.DataContext is Service service)
+            try
             {
-                DBConnection.clientsServiceEntities.Service.Remove(service);
-                DBConnection.clientsServiceEntities.SaveChanges();
+                if (sender is Button button && button.DataContext is Service service)
+                {
+                    DBConnection.clientsServiceEntities.Service.Remove(service);
+                    DBConnection.clientsServiceEntities.SaveChanges();
 
-                Refresh(0);
+                    Refresh(0);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Невозможно удалить запись!", "ОШИБКА!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

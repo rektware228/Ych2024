@@ -22,27 +22,90 @@
 
         <!--Услуга должна содержать следующие данные: название, стоимость, длительность, описание, скидку, 
 основное изображение-->
+
+        <TextBlock x:Name="IDTB" Text="" Grid.Row="0" Grid.Column="4" Width="100" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" FontSize="15"/>
+        
         <TextBlock Text="РЕДАКТИРОВАНИЕ УСЛУГИ" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Width="500" Height="45" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0" FontSize="30"/>
-        <Image x:Name="MainMG" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3"
+        <Image x:Name="MainMG" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" Height="300" VerticalAlignment="Top"
                Source="{Binding MainImage}" Stretch="Uniform"/>
 
+        <Button Content="Изменить главное фото" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Name="EditMainIMGBTN"                 
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,11" Width="160"         
+                BorderBrush="Black" BorderThickness="1" Background="#CC05A0FF" Height="26" Click="EditMainIMGBTN_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button Content="Дополнительные фото" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Name="MoreIMGBTN" 
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,11" Width="160"           
+                BorderBrush="Black" BorderThickness="1" Background="#CC05A0FF" Height="26" Click="MoreIMGBTN_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
         <TextBlock Text="Наименование:" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 00"/>
-        <TextBox x:Name="NameServiceTB" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="340" Height="45" HorizontalAlignment="Left" Margin="10 0 0 40" TextWrapping="Wrap"/>
+        <TextBox  x:Name="NameServiceTB" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="340" Height="45" HorizontalAlignment="Left" Margin="10 10 0 40" TextWrapping="Wrap" >
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="White">
+                        <ScrollViewer Margin="2" BorderBrush="White" x:Name="PART_ContentHost" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
 
         <TextBlock Text="Стоимость:" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="150" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 70 0 0"/>
-        <TextBox x:Name="CostServiceTB" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="150" Height="25" HorizontalAlignment="Left" Margin="10 90 0 0"/>
+        <TextBox x:Name="CostServiceTB" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="150" Height="25" HorizontalAlignment="Left" Margin="10 90 0 0" >
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="White">
+                        <ScrollViewer Margin="2" BorderBrush="White" x:Name="PART_ContentHost" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" PreviewTextInput="NumericOnly"/>
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
 
         <TextBlock Text="Скидка:" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"  Width="150" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="200 70 0 0"/>
-        <TextBox x:Name="SaleServiceTB" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="150" Height="25" HorizontalAlignment="Left" Margin="200 90 0 0"/>
+        <TextBox  x:Name="SaleServiceTB" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="150" Height="25" HorizontalAlignment="Left" Margin="200 90 0 0">
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="White">
+                        <ScrollViewer Margin="2" BorderBrush="White" x:Name="PART_ContentHost" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" PreviewTextInput="NumericOnly"/>
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
 
-        <TextBlock Text="Длительность:" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,4,0,0"/>
-        <TextBox x:Name="TimeServiceTB" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" HorizontalAlignment="Left" Margin="10,0,0,45"/>
+        <TextBlock Text="Длительность (в минутах):" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,4,0,0"/>
+        <TextBox  x:Name="TimeServiceTB" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" HorizontalAlignment="Left" Margin="10,0,0,45" >
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="White">
+                        <ScrollViewer Margin="2" BorderBrush="White" x:Name="PART_ContentHost" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" PreviewTextInput="NumericOnly"/>
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
 
         <TextBlock Text="Описание:" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,57,0,0"/>
-        <TextBox x:Name="DegrServiceTB" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Width="300" Height="104" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,49" TextWrapping="Wrap"/>
+        <TextBox  x:Name="DegrServiceTB" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Width="300" Height="104" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,49" TextWrapping="Wrap" >
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Background="White">
+                        <ScrollViewer Margin="2" BorderBrush="White" x:Name="PART_ContentHost" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
 
         <Button Content="Подтвердить" Grid.Row="3" Grid.Column="3" Name="OKBTN" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,11" Width="120"          
-                BorderBrush="Black" BorderThickness="1" Background="#CC05A0FF" Height="26">
+                BorderBrush="Black" BorderThickness="1" Background="#CC05A0FF" Height="26" Click="OKBTN_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>

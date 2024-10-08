@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace EducationalPracticeAutumn2024.Windowws
@@ -29,13 +30,96 @@ namespace EducationalPracticeAutumn2024.Windowws
             contextservise = services;
             this.DataContext = this;
 
+
             MainMG.Source = new BitmapImage(new Uri(services.MainImagePath, UriKind.Relative));
+            IDTB.Text = $"ID: {contextservise.ID}";
             NameServiceTB.Text = contextservise.Title;
             CostServiceTB.Text = contextservise.Cost.ToString();
-            TimeServiceTB.Text = contextservise.DurationInSeconds.ToString();
+            TimeServiceTB.Text = (contextservise.DurationInSeconds / 60).ToString();
             SaleServiceTB.Text = contextservise.Discount.ToString();
             DegrServiceTB.Text += contextservise.Description;
 
+        }
+
+        private void NumericOnly(System.Object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = IsTextNumeric(e.Text);
+
+        }
+
+        private static bool IsTextNumeric(string str)
+        {
+            System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex("[^0-9]");
+            return reg.IsMatch(str);
+
+        }
+
+        private void OKBTN_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                StringBuilder error = new StringBuilder();
+                Service service = contextservise;
+                if (string.IsNullOrWhiteSpace(NameServiceTB.Text) || CostServiceTB.Text.Trim() == "" || TimeServiceTB.Text.Trim() == "")
+
+                {
+                    error.AppendLine("Заполните все поля!");
+                }
+                else if (error.Length > 0)
+                {
+                    MessageBox.Show(error.ToString());
+                }
+                else if (int.Parse(TimeServiceTB.Text) > 240)
+                {
+                    MessageBox.Show("Занятие не может идти больше 4 часов!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (int.Parse(SaleServiceTB.Text) < 0)
+                {
+                    MessageBox.Show("Скидка не может быть меньше 0!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (int.Parse(SaleServiceTB.Text) > 100)
+                {
+                    MessageBox.Show("Скидка не может быть больше 100!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (int.Parse(TimeServiceTB.Text) < 0)
+                {
+                    MessageBox.Show("Время занятия не может быть отрицательным!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if(int.Parse(CostServiceTB.Text) < 0)
+                {
+                    MessageBox.Show("Цена не может быть ниже нуля!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    var existingService = DBConnection.clientsServiceEntities.Service.FirstOrDefault(s => s.Title.Equals(NameServiceTB.Text, StringComparison.OrdinalIgnoreCase));
+
+                    if (existingService != null && existingService.ID != service.ID)
+                    {
+                        MessageBox.Show("Услуга с таким наименованием уже существует.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    service.Title = NameServiceTB.Text;
+                    service.Description = DegrServiceTB.Text;
+                    service.Cost = int.Parse(CostServiceTB.Text);
+                    service.Discount = int.Parse(SaleServiceTB.Text);
+                    service.DurationInSeconds = int.Parse(TimeServiceTB.Text) * 60;
+                    DBConnection.clientsServiceEntities.SaveChanges();
+
+                    NameServiceTB.Text = String.Empty;
+                    SaleServiceTB.Text = String.Empty;
+                    DegrServiceTB.Text = String.Empty;
+                    CostServiceTB.Text = String.Empty;
+                    TimeServiceTB.Text = String.Empty;
+
+                    DBConnection.clientsServiceEntities.SaveChanges();
+                    Close();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Произошла ошибка!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CancelBTN_Click(object sender, RoutedEventArgs e)
@@ -43,5 +127,29 @@ namespace EducationalPracticeAutumn2024.Windowws
             MessageBox.Show("Вы действительно хотите выйти?", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             this.Close();
         }
+
+        private void EditMainIMGBTN_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string selectedImagePath = $"/Услуги школы/{openFileDialog.SafeFileName}";
+
+                MainMG.Source = new BitmapImage(new Uri(selectedImagePath, UriKind.Relative));
+
+                contextservise.MainImagePath = selectedImagePath;
+
+                DBConnection.clientsServiceEntities.SaveChanges();
+            }
+        }
+
+        private void MoreIMGBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
     }
 }
