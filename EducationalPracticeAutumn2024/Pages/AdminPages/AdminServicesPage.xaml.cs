@@ -23,95 +23,154 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
     public partial class ServicesPage : Page
     {
         public static List<Service> services { get; set; }
+        public static List<ClientService> clientServices { get; set; }
 
         public ServicesPage()
         {
             InitializeComponent();
 
+            Refresh(0);
+            SaleFLTRCB.SelectedIndex = 0;
+
             services = new List<Service>(DBConnection.clientsServiceEntities.Service.ToList());
+            clientServices = new List<ClientService>(DBConnection.clientsServiceEntities.ClientService.ToList());
+
             ServicesLV.ItemsSource = services;
-
-            FiltrCb.Items.Add("По умолчанию");
-            FiltrCb.Items.Add("По убыванию");
-            FiltrCb.Items.Add("По возрастанию");
-
-            FiltrSaleCb.Items.Add("от 0 до 5%");
-            FiltrSaleCb.Items.Add("от 5% до 15%");
-            FiltrSaleCb.Items.Add("от 15% до 30%");
-            FiltrSaleCb.Items.Add("от 30% до 70%");
-            FiltrSaleCb.Items.Add("от 70% до 100%");
-            FiltrSaleCb.Items.Add("Все");
-            FiltrSaleCb.SelectedIndex = 5;
-
-            Refresh();
-
             this.DataContext = this;
         }
 
-        private void Refresh()
+        private void Refresh(int i)
         {
-            List<Service> services = new List<Service>(DBConnection.clientsServiceEntities.Service.ToList());
-            services = services.Where(i => i.Title.ToLower().StartsWith(SearchTbx.Text.Trim().ToLower())
-                   || i.Description.ToLower().StartsWith(SearchTbx.Text.Trim().ToLower())).ToList();
 
-            if (FiltrCb.SelectedIndex == 0)
+            var allService = DBConnection.clientsServiceEntities.Service.ToList();
+            var filtred = allService.AsQueryable();
+
+            var searchText = SearchTB.Text.ToLower();
+
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 1)
             {
-                ServicesLV.ItemsSource = services;
+                var min_discountValue = 0;
+                var max_discountValue = 5;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
             }
-            else if (FiltrCb.SelectedIndex == 1)
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 2)
             {
-                ServicesLV.ItemsSource = services.OrderByDescending(x => x.Cost).ToList();
+                var min_discountValue = 5;
+                var max_discountValue = 15;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
             }
-            else if (FiltrCb.SelectedIndex == 2)
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 3)
             {
-                ServicesLV.ItemsSource = services.OrderBy(x => x.Cost).ToList();
+                var min_discountValue = 15;
+                var max_discountValue = 30;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
+            }
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 4)
+            {
+                var min_discountValue = 30;
+                var max_discountValue = 70;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
+            }
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 5)
+            {
+                var min_discountValue = 70;
+                var max_discountValue = 100;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
             }
 
-            if (FiltrSaleCb.SelectedIndex == 0)
+            if (!string.IsNullOrWhiteSpace(searchText))
             {
-                ServicesLV.ItemsSource = services.Where(x => x.Discount >= 0 && x.Discount < 5).ToList();
-            }
-            else if (FiltrSaleCb.SelectedIndex == 1)
-            {
-                ServicesLV.ItemsSource = services.Where(x => x.Discount >= 5 && x.Discount < 15).ToList();
-            }
-            else if (FiltrSaleCb.SelectedIndex == 2)
-            {
-                ServicesLV.ItemsSource = services.Where(x => x.Discount >= 15 && x.Discount < 30).ToList();
-            }
-            else if (FiltrSaleCb.SelectedIndex == 3)
-            {
-                ServicesLV.ItemsSource = services.Where(x => x.Discount >= 30 && x.Discount < 70).ToList();
-            }
-            else if (FiltrSaleCb.SelectedIndex == 4)
-            {
-                ServicesLV.ItemsSource = services.Where(x => x.Discount >= 70 && x.Discount < 100).ToList();
-            }
-            else if (FiltrSaleCb.SelectedIndex == 5)
-            {
-                ServicesLV.ItemsSource = services;
+                filtred = filtred.Where(x => x.Title.ToLower().Contains(searchText) ||
+                                                (x.Description != null && x.Description.ToLower().Contains(searchText)));
             }
 
-            ServicesLV.ItemsSource = services;
+            if (LessBTN.IsEnabled == true && LargerBTN.IsEnabled == false)
+                filtred = filtred.OrderByDescending(x => x.NewCost);
+            else if (LessBTN.IsEnabled == false && LargerBTN.IsEnabled == true)
+                filtred = filtred.OrderBy(x => x.NewCost);
 
+            ServicesLV.ItemsSource = filtred.ToList();
+            CountRecordTBL.Text = $"{filtred.Count()} из {allService.Count}";
         }
 
-        private void FiltrCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BackBTN_Click(object sender, RoutedEventArgs e)
         {
-            Refresh();
+            NavigationService.GoBack();
         }
 
-        private void FiltrSaleCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PART_ContentHost_TextChanged(object sender, TextChangedEventArgs e) //Поиск текста
         {
-            Refresh();
+            Refresh(0);
         }
 
-        private void SearchTbx_TextChanged(object sender, TextChangedEventArgs e)
+        private void SaleFLTRCB_SelectionChanged(object sender, SelectionChangedEventArgs e) //Комбобокс со скидкой
         {
-            Refresh();
+            Refresh(0);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) //Редач
+        private void LargerBTN_Click(object sender, RoutedEventArgs e) //По возрастанию
+        {
+            LargerBTN.Background = new SolidColorBrush(Color.FromRgb(0, 28, 112));
+            LessBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+            LargerBTN.IsEnabled = false;
+            LessBTN.IsEnabled = true;
+
+            Refresh(0);
+        }
+
+        private void LessBTN_Click(object sender, RoutedEventArgs e) //По убыванию
+        {
+            LessBTN.Background = new SolidColorBrush(Color.FromRgb(0, 28, 112));
+            LargerBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+            LessBTN.IsEnabled = false;
+            LargerBTN.IsEnabled = true;
+
+            Refresh(0);
+        }
+
+        private void ResetBTN_Click(object sender, RoutedEventArgs e) //Очистить
+        {
+            LessBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+            LargerBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+            LessBTN.IsEnabled = true;
+            LargerBTN.IsEnabled = true;
+
+            SearchTB.Text = "";
+
+            SaleFLTRCB.SelectedIndex = 0;
+
+            var allService = DBConnection.clientsServiceEntities.Service.ToList();
+            var filtred = allService.AsQueryable();
+
+
+            ServicesLV.ItemsSource = filtred.ToList();
+            CountRecordTBL.Text = $"{filtred.Count()} из {allService.Count}";
+        }
+
+
+
+        private void EdidServiceBTN_Click(object sender, RoutedEventArgs e) //Редач
         {
             if (sender is Button button && button.DataContext is Service service)
             {
@@ -120,18 +179,18 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                 EditServiceWindoww editServiceWindow = new EditServiceWindoww(selectedService);
                 editServiceWindow.ShowDialog();
 
-                Refresh();
+                Refresh(0);
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e) //Удалить
+        private void DeliteServiceBNT_Click(object sender, RoutedEventArgs e) //Удалить
         {
             if (sender is Button button && button.DataContext is Service service)
             {
                 DBConnection.clientsServiceEntities.Service.Remove(service);
                 DBConnection.clientsServiceEntities.SaveChanges();
 
-                Refresh();
+                Refresh(0);
             }
         }
     }

@@ -22,21 +22,90 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="SearchTbx"
-            FontSize="23" Grid.Column="0" Grid.Row="0"   
+        <Button x:Name="BackBTN" Content="⬅"
+                FontSize="30" FontWeight="Light"
+                Grid.Column="0" Grid.Row="0"
+                Width="100" Height="50" Margin="20, 30, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" Click="BackBTN_Click"
+                >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <TextBlock Text="📖 Услуги Learn School"
+                   Grid.Column="1" Grid.Row="0"
+                   FontSize="52"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 30, 0, 0"/>
+
+        <TextBox x:Name="SearchTB" TextChanged="PART_ContentHost_TextChanged"
+            FontSize="23" Grid.Column="0" Grid.Row="1"   
             Background="White"
-            Width="500" Height="65"
-            VerticalAlignment="Bottom" HorizontalAlignment="Center" TextChanged="SearchTbx_TextChanged" />
+            Width="530" Height="65"
+            VerticalAlignment="Top" Margin="30, 60, 0, 0" HorizontalAlignment="Left" >
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="20" BorderBrush="Black" BorderThickness="3" Background="White">
+                        <ScrollViewer Margin="10" BorderBrush="White" x:Name="PART_ContentHost" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
 
-        <ComboBox x:Name="FiltrCb"
-                  Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"
-              Margin="0 100 0 0" FontSize="21"  Width="500" Height="65" SelectionChanged="FiltrCb_SelectionChanged">
+
+        <ComboBox x:Name="SaleFLTRCB"
+                  Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                  Margin="37, 0, 0, 3"
+               FontSize="21"  Width="350" Height="65" SelectionChanged="SaleFLTRCB_SelectionChanged">
+            <TextBlock FontSize="20">Все</TextBlock>
+            <TextBlock FontSize="20">от 0% до 5%</TextBlock>
+            <TextBlock FontSize="20">от 5% до 15%</TextBlock>
+            <TextBlock FontSize="20">от 15% до 30%</TextBlock>
+            <TextBlock FontSize="20">от 30% до 70%</TextBlock>
+            <TextBlock FontSize="20">от 70% до 100%</TextBlock>
         </ComboBox>
 
-        <ComboBox x:Name="FiltrSaleCb"
-            Grid.Column="0" Grid.Row="1" FontSize="21"
-            Width="500" Height="65" VerticalAlignment="Top" Margin="30" SelectionChanged="FiltrSaleCb_SelectionChanged">
-        </ComboBox>
+
+        <Button x:Name="LargerBTN" Content="⬆"
+                FontSize="50" FontWeight="Light"
+                Grid.Column="0" Grid.Row="1"
+                Width="70" Height="70" Margin="280 0 0 3" VerticalAlignment="Bottom"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" Click="LargerBTN_Click"
+                >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="LessBTN" Content="⬇"
+                FontSize="50" FontWeight="Light"
+                Grid.Column="0" Grid.Row="1"
+                Width="70" Height="70" Margin="450 0 0 3" VerticalAlignment="Bottom"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" Click="LessBTN_Click"
+                >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="ResetBTN" Content="Очистить ❌"
+                FontSize="30" FontWeight="Light"
+                Grid.Column="0" Grid.Row="2"
+                Width="250" Height="50" Margin="20" VerticalAlignment="Top"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" Click="ResetBTN_Click"
+                >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
         <ListView x:Name="ServicesLV" VerticalAlignment="Center"
                   Grid.Column="1" Grid.ColumnSpan="2" 
@@ -50,6 +119,18 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="2" BorderBrush="Black" Margin="0" Padding="1">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="Beige"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Discount}" Value="0">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+
                         <StackPanel>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal"  Height="255">
@@ -68,14 +149,48 @@
                                                 <RowDefinition Height="50"/>
                                             </Grid.RowDefinitions>
 
-                                            <TextBlock Grid.Row="0" Text="{Binding Title}" TextWrapping="Wrap" FontSize="35" Width="830" Height="100" Margin="20, 0"/>
-                                            <TextBlock Grid.Row="1" Text="{Binding Cost}" TextWrapping="Wrap" FontSize="30" Width="830" Height="50" Margin="20, 0"/>
-                                            <TextBlock Grid.Row="2" Text="*" TextWrapping="Wrap" FontSize="30" Width="830" Height="50" Margin="20, 0"/>
 
-                                            <Button Grid.Row="3" Content="редактировать"
+                                            <TextBlock Grid.Row="0" Text="{Binding Title}" TextWrapping="Wrap" FontSize="35" Width="830" Height="100" Margin="20, 0"/>
+
+                                            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="20, 0, 0, 0" Width="850">
+                                                <TextBlock Text="{Binding Cost}" TextWrapping="Wrap" FontSize="30" Height="50"  TextDecorations="Strikethrough">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Discount}" Value="0">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+
+                                                <TextBlock  Text="{Binding NewCost,StringFormat=' {0} рублей '}" TextWrapping="Wrap" FontSize="30" Height="50" x:Name="NewCostTbl" />
+
+                                                <TextBlock FontSize="30" Text="{Binding DurationInMinutes}" Height="50" TextWrapping="Wrap"/>
+
+                                            </StackPanel>
+
+
+
+
+                                            <TextBlock Grid.Row="2" Text="{Binding Discount, StringFormat=' *скидка {0}%'}" TextWrapping="Wrap" FontSize="25" Width="830" Height="50" Margin="20, 0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Discount}" Value="0">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <Button x:Name="EditServiceBTN" Grid.Row="3" Content="редактировать"
                                                     HorizontalAlignment="Left"
                                                     Width="300" Height="45" Margin="20 0 0 0" FontSize="30"                
-                                                    BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" >
+                                                    BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" 
+                                                    Click="EdidServiceBTN_Click">
                                                 <Button.Resources>
                                                     <Style TargetType="Border">
                                                         <Setter Property="CornerRadius" Value="20"/>
@@ -83,29 +198,30 @@
                                                 </Button.Resources>
                                             </Button>
 
-                                            <Button Grid.Row="3" Content="удалить"
+                                            <Button x:Name="DeliteServiceBTN" Grid.Row="3" Content="удалить"
                                                     HorizontalAlignment="Left"
                                                     Width="200" Height="45" Margin="350 0 0 0" FontSize="30"
-                                                    BorderBrush="Black" BorderThickness="2" Background="#CC05A0FF" >
+                                                    BorderBrush="Black" BorderThickness="2" Background="#CC05A0FF" 
+                                                    Click="DeliteServiceBNT_Click">
                                                 <Button.Resources>
                                                     <Style TargetType="Border">
                                                         <Setter Property="CornerRadius" Value="20"/>
                                                     </Style>
                                                 </Button.Resources>
                                             </Button>
-
                                         </Grid>
-
                                     </StackPanel>
-
-
                                 </StackPanel>
-
                             </StackPanel>
                         </StackPanel>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <TextBlock x:Name="CountRecordTBL" Text=""
+                   Grid.Column="2" Grid.Row="4"
+                   FontSize="35"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="400, 0, 0, 0"/>
     </Grid>
 </Page>
