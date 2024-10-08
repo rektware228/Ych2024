@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xaml;
+using System.Drawing;
 
 namespace EducationalPracticeAutumn2024.Pages.MainPages
 {
@@ -22,12 +24,148 @@ namespace EducationalPracticeAutumn2024.Pages.MainPages
     public partial class ServicesPage : Page
     {
         public static List<Service> services = new List<Service>();
+        public static List<ClientService> clientServices { get; set; }
         public ServicesPage()
         {
             InitializeComponent();
 
+            Refresh(0);
+            SaleFLTRCB.SelectedIndex = 0;
+
             services = new List<Service>(DBConnection.clientsServiceEntities.Service.ToList());
+            clientServices = new List<ClientService>(DBConnection.clientsServiceEntities.ClientService.ToList());
+
             ServicesLV.ItemsSource = services;
+            this.DataContext = this;
+        }
+
+        private void Refresh(int i)
+        {
+
+            var allService = DBConnection.clientsServiceEntities.Service.ToList();
+            var filtred = allService.AsQueryable();
+
+            var searchText = SearchTB.Text.ToLower();
+
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 1)
+            {
+                var min_discountValue = 0;
+                var max_discountValue = 5;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
+            }
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 2)
+            {
+                var min_discountValue = 5;
+                var max_discountValue = 15;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
+            }
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 3)
+            {
+                var min_discountValue = 15;
+                var max_discountValue = 30;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
+            }
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 4)
+            {
+                var min_discountValue = 30;
+                var max_discountValue = 70;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
+            }
+            if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 5)
+            {
+                var min_discountValue = 70;
+                var max_discountValue = 100;
+
+                filtred = filtred.Where(x => x.Discount.HasValue &&
+                                               x.Discount.Value >= min_discountValue &&
+                                               x.Discount.Value < max_discountValue);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                filtred = filtred.Where(x => x.Title.ToLower().Contains(searchText) ||
+                                                (x.Description != null && x.Description.ToLower().Contains(searchText)));
+            }
+
+            if (LessBTN.IsEnabled == true && LargerBTN.IsEnabled == false)
+                filtred = filtred.OrderByDescending(x => x.NewCost);
+            else if (LessBTN.IsEnabled == false && LargerBTN.IsEnabled == true)
+                filtred = filtred.OrderBy(x => x.NewCost);
+
+            ServicesLV.ItemsSource = filtred.ToList();
+            CountRecordTBL.Text = $"{filtred.Count()} из {allService.Count}";
+        }
+
+        private void BackBTN_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void PART_ContentHost_TextChanged(object sender, TextChangedEventArgs e) //Поиск текста
+        {
+            Refresh(0);
+        }
+
+        private void SaleFLTRCB_SelectionChanged(object sender, SelectionChangedEventArgs e) //Комбобокс со скидкой
+        {
+            Refresh(0);
+        }
+
+        private void LargerBTN_Click(object sender, RoutedEventArgs e) //По возрастанию
+        {
+            LargerBTN.Background = new SolidColorBrush(Color.FromRgb(0, 28, 112));
+            LessBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+            LargerBTN.IsEnabled = false;
+            LessBTN.IsEnabled = true;
+
+            Refresh(0);
+        }
+
+        private void LessBTN_Click(object sender, RoutedEventArgs e) //По убыванию
+        {
+            LessBTN.Background = new SolidColorBrush(Color.FromRgb(0, 28, 112));
+            LargerBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+            LessBTN.IsEnabled = false;
+            LargerBTN.IsEnabled = true;
+
+            Refresh(0);
+        }
+
+        private void ResetBTN_Click(object sender, RoutedEventArgs e) //Очистить
+        {
+            LessBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+            LargerBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+            LessBTN.IsEnabled = true;
+            LargerBTN.IsEnabled = true;
+
+            SearchTB.Text = "";
+
+            SaleFLTRCB.SelectedIndex = 0;
+
+            var allService = DBConnection.clientsServiceEntities.Service.ToList();
+            var filtred = allService.AsQueryable();
+
+
+            ServicesLV.ItemsSource = filtred.ToList();
+            CountRecordTBL.Text = $"{filtred.Count()} из {allService.Count}";
         }
     }
 }
