@@ -152,6 +152,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windowws\AddClientServiceWindoww.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windowws\AddPhotoPathWindoww.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +186,9 @@
     </Compile>
     <Compile Include="Pages\MainPages\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windowws\AddClientServiceWindoww.xaml.cs">
+      <DependentUpon>AddClientServiceWindoww.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windowws\AddPhotoPathWindoww.xaml.cs">
       <DependentUpon>AddPhotoPathWindoww.xaml</DependentUpon>

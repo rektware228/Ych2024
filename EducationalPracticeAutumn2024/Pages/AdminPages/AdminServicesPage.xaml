@@ -240,7 +240,7 @@
                                             <Button x:Name="RegistrServiceBTN" Grid.Row="3" Content="запись"
                                                     HorizontalAlignment="Right"
                                                     Width="200" Height="45" Margin="0 0 20 0" FontSize="30"
-                                                    BorderBrush="Black" BorderThickness="2" Background="#CC05A0FF" 
+                                                    BorderBrush="Black" BorderThickness="2" Background="#CC05A0FF" Click="RegistrServiceBTN_Click"
                                                     >
                                                 <Button.Resources>
                                                     <Style TargetType="Border">

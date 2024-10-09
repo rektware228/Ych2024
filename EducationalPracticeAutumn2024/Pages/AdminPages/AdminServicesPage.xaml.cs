@@ -108,6 +108,12 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
             CountRecordTBL.Text = $"{filtred.Count()} из {allService.Count}";
         }
 
+        private void RefreshLV()
+        {
+            ServicesLV.ItemsSource = DBConnection.clientsServiceEntities.Service.ToList();
+
+        }
+
         private void BackBTN_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
@@ -187,16 +193,56 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
         {
             try
             {
+
                 if (sender is Button button && button.DataContext is Service service)
                 {
-                    var result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
-                    if (result == MessageBoxResult.Yes)
+                    // Проверяем наличие записей в ClientService
+                    var hasClientServiceRecords = DBConnection.clientsServiceEntities.ClientService
+                        .Any(cs => cs.ServiceID == service.ID);
+
+                    // Проверяем наличие дополнительных фотографий в ServicePhoto
+                    var hasServicePhotos = DBConnection.clientsServiceEntities.ServicePhoto
+                        .Any(sp => sp.ServiceID == service.ID);
+
+                    if (hasClientServiceRecords)
                     {
-                        DBConnection.clientsServiceEntities.Service.Remove(service);
-                        DBConnection.clientsServiceEntities.SaveChanges();
-                        Refresh(0);
+                        MessageBox.Show("На данную услугу существует запись.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
+                    else if (hasServicePhotos)
+                    {
+                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?\nПосле удаления дополнительных фотографий услуга удалится автоматически.", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            DBConnection.clientsServiceEntities.Service.Remove(service);
+                            DBConnection.clientsServiceEntities.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        // Если нет ни записей в ClientService, ни фотографий, просто удаляем услугу
+                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            DBConnection.clientsServiceEntities.Service.Remove(service);
+                            DBConnection.clientsServiceEntities.SaveChanges();
+                        }
+                    }
+
+                    //Refresh(0);
+
+                    //var result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+                    //if (result == MessageBoxResult.Yes)
+                    //{
+                    //    DBConnection.clientsServiceEntities.Service.Remove(service);
+                    //    DBConnection.clientsServiceEntities.SaveChanges();
+                        
+                    //}
+                    //Refresh(0);
                 }
             }
             catch
@@ -208,14 +254,27 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
 
         private void AddServiceBTN_Click(object sender, RoutedEventArgs e)
         {
-                AddServiceWindoww addServiceWindow = new AddServiceWindoww();
-                addServiceWindow.ShowDialog();
+            AddServiceWindoww addServiceWindow = new AddServiceWindoww();
+            addServiceWindow.ShowDialog();
         }
 
         private void NearestServiceClientsBTN_Click(object sender, RoutedEventArgs e)
         {
             NearestServiceClients nearestServiceClients = new NearestServiceClients();
             nearestServiceClients.Show(); //Окно специально открыто без блокировки основных окон!!!
+        }
+
+        private void RegistrServiceBTN_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Service service)
+            {
+                Service selectedService = service;
+
+                AddClientService AddClientServiceWindow = new AddClientService(selectedService);
+                AddClientServiceWindow.ShowDialog();
+
+                Refresh(0);
+            }
         }
     }
 }

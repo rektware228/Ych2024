@@ -1,6 +1,7 @@
 ﻿using EducationalPracticeAutumn2024.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,10 +81,30 @@ namespace EducationalPracticeAutumn2024.Windowws
         {
             if (ServicesPhotosLV.SelectedItem is ServicePhoto servicePhoto)
             {
-                DBConnection.clientsServiceEntities.ServicePhoto.Remove(servicePhoto);
-                DBConnection.clientsServiceEntities.SaveChanges();
+                try
+                {
+                    DBConnection.clientsServiceEntities.ServicePhoto.Remove(servicePhoto);
+                    DBConnection.clientsServiceEntities.SaveChanges();
 
-                ServicesPhotosLV.ItemsSource = DBConnection.clientsServiceEntities.ServicePhoto.ToList();
+                    ServicesPhotosLV.ItemsSource = DBConnection.clientsServiceEntities.ServicePhoto.ToList();
+                }
+                catch
+                {
+                    MessageBoxResult result = MessageBox.Show("Произошла ошибка!\nНеобходимо перезагрузить программу!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    if (result == MessageBoxResult.OK)
+                    {
+                        // Получаем путь к текущему исполняемому файлу
+                        string exePath = Process.GetCurrentProcess().MainModule.FileName;
+
+                        // Запускаем новый экземпляр приложения
+                        Process.Start(exePath);
+
+                        // Завершаем текущее приложение
+                        Application.Current.Shutdown();
+                    }
+                }
+
             }
         }
     }
