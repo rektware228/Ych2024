@@ -200,5 +200,11 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                 MessageBox.Show("Невозможно удалить запись!", "ОШИБКА!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void AddServiceBTN_Click(object sender, RoutedEventArgs e)
+        {
+                AddServiceWindoww addServiceWindow = new AddServiceWindoww();
+                addServiceWindow.ShowDialog();
+        }
     }
 }

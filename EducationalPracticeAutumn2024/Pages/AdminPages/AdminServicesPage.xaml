@@ -107,6 +107,19 @@
             </Button.Resources>
         </Button>
 
+        <Button x:Name="AddServiceBTN" Content="Добавить услугу"
+                FontSize="30" FontWeight="Light"
+                Grid.Column="0" Grid.Row="3"
+                Width="350" Height="50" Margin="20" VerticalAlignment="Top"
+                BorderBrush="Black" BorderThickness="3" Background="#CC05A0FF" Click="AddServiceBTN_Click"
+                >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
         <ListView x:Name="ServicesLV" VerticalAlignment="Center"
                   Grid.Column="1" Grid.ColumnSpan="2" 
                   Grid.Row="0" Grid.RowSpan="5"
