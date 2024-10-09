@@ -22,22 +22,22 @@ namespace EducationalPracticeAutumn2024.Windowws
     public partial class EditServiceWindoww : Window
     {
         public static List<Service> services { get; set; }
-        Service contextservise;
+        Service contextservice;
 
         public EditServiceWindoww(Service services)
         {
             InitializeComponent();
-            contextservise = services;
+            contextservice = services;
             this.DataContext = this;
 
 
             MainMG.Source = new BitmapImage(new Uri(services.MainImagePath, UriKind.Relative));
-            IDTB.Text = $"ID: {contextservise.ID}";
-            NameServiceTB.Text = contextservise.Title;
-            CostServiceTB.Text = contextservise.Cost.ToString();
-            TimeServiceTB.Text = (contextservise.DurationInSeconds / 60).ToString();
-            SaleServiceTB.Text = contextservise.Discount.ToString();
-            DegrServiceTB.Text += contextservise.Description;
+            IDTB.Text = $"ID: {contextservice.ID}";
+            NameServiceTB.Text = contextservice.Title;
+            CostServiceTB.Text = contextservice.Cost.ToString();
+            TimeServiceTB.Text = (contextservice.DurationInSeconds / 60).ToString();
+            SaleServiceTB.Text = contextservice.Discount.ToString();
+            DegrServiceTB.Text += contextservice.Description;
 
         }
 
@@ -59,7 +59,7 @@ namespace EducationalPracticeAutumn2024.Windowws
             try
             {
                 StringBuilder error = new StringBuilder();
-                Service service = contextservise;
+                Service service = contextservice;
                 if (string.IsNullOrWhiteSpace(NameServiceTB.Text) || CostServiceTB.Text.Trim() == "" || TimeServiceTB.Text.Trim() == "")
 
                 {
@@ -124,8 +124,12 @@ namespace EducationalPracticeAutumn2024.Windowws
 
         private void CancelBTN_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Вы действительно хотите выйти?", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            this.Close();
+            var result = MessageBox.Show("Вы действительно хотите выйти?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
         }
 
         private void EditMainIMGBTN_Click(object sender, RoutedEventArgs e)
@@ -139,7 +143,7 @@ namespace EducationalPracticeAutumn2024.Windowws
 
                 MainMG.Source = new BitmapImage(new Uri(selectedImagePath, UriKind.Relative));
 
-                contextservise.MainImagePath = selectedImagePath;
+                contextservice.MainImagePath = selectedImagePath;
 
                 DBConnection.clientsServiceEntities.SaveChanges();
             }
@@ -147,7 +151,8 @@ namespace EducationalPracticeAutumn2024.Windowws
 
         private void MoreIMGBTN_Click(object sender, RoutedEventArgs e)
         {
-
+            var allPhotoWindow = new AddPhotoPathWindoww(contextservice);
+            allPhotoWindow.Show();
         }
 
 

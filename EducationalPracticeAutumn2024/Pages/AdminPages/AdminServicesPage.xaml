@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:EducationalPracticeAutumn2024.Pages.AdminPages"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920" FontFamily="Comic Sans MS"
-      Title=" ">
+      Title="Услуги LEARN (Режим администратора)">
 
     <Grid Background="#E7FABF">
         <Grid.ColumnDefinitions>
@@ -110,6 +110,7 @@
         <ListView x:Name="ServicesLV" VerticalAlignment="Center"
                   Grid.Column="1" Grid.ColumnSpan="2" 
                   Grid.Row="0" Grid.RowSpan="5"
+                  BorderBrush="Black" BorderThickness="2"
                   Width="1200" Height="800" d:ItemsSource="{d:SampleData ItemCount=100}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

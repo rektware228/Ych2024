@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EducationalPracticeAutumn2024.Windowws"
         mc:Ignorable="d"
-        Title="" Height="450" Width="800" FontFamily="Comic Sans MS" ResizeMode="NoResize">
-    <Grid>
+        Title="Редактирование услуги (Режим администратора)" Height="450" Width="800" FontFamily="Comic Sans MS" ResizeMode="NoResize">
+    <Grid Background="#E7FABF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
