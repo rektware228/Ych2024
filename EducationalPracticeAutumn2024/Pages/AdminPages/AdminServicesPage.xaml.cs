@@ -197,13 +197,8 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                 if (sender is Button button && button.DataContext is Service service)
                 {
 
-                    // Проверяем наличие записей в ClientService
-                    var hasClientServiceRecords = DBConnection.clientsServiceEntities.ClientService
-                        .Any(cs => cs.ServiceID == service.ID);
-
-                    // Проверяем наличие дополнительных фотографий в ServicePhoto
-                    var hasServicePhotos = DBConnection.clientsServiceEntities.ServicePhoto
-                        .Any(sp => sp.ServiceID == service.ID);
+                    var hasClientServiceRecords = DBConnection.clientsServiceEntities.ClientService.Any(x => x.ServiceID == service.ID);
+                    var hasServicePhotos = DBConnection.clientsServiceEntities.ServicePhoto.Any(x => x.ServiceID == service.ID);
 
                     if (hasClientServiceRecords)
                     {
@@ -212,17 +207,18 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                     }
                     else if (hasServicePhotos)
                     {
-                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?\nПосле удаления дополнительных фотографий услуга удалится автоматически.", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
+                        
                         if (result == MessageBoxResult.Yes)
                         {
+                            MessageBox.Show($"На данную услугу прикреплены дополнительные фотографии!\nПосле удаления дополнительных фотографий услуга удалится автоматически.", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                             DBConnection.clientsServiceEntities.Service.Remove(service);
                             DBConnection.clientsServiceEntities.SaveChanges();
                         }
                     }
                     else
                     {
-                        // Если нет ни записей в ClientService, ни фотографий, просто удаляем услугу
                         MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
                         if (result == MessageBoxResult.Yes)
@@ -231,24 +227,12 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                             DBConnection.clientsServiceEntities.SaveChanges();
                         }
                     }
-
-                    //Refresh(0);
-
-                    //var result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
-
-                    //if (result == MessageBoxResult.Yes)
-                    //{
-                    //    DBConnection.clientsServiceEntities.Service.Remove(service);
-                    //    DBConnection.clientsServiceEntities.SaveChanges();
-                        
-                    //}
-                    //Refresh(0);
+                    Refresh(0);
                 }
             }
             catch
             {
-                MessageBox.Show("Невозможно удалить запись!\nНа данную услугу существует запись или дополнительная фотография", "ОШИБКА!", MessageBoxButton.OK, MessageBoxImage.Error);
-                MessageBox.Show("После удаления записей на данную услугу или дополнительных фотографий услуга удалиться автоматически", "Подсказка", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Ошибка удаления услуги!","ОШИБКА!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
