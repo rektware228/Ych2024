@@ -189,15 +189,20 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
             {
                 if (sender is Button button && button.DataContext is Service service)
                 {
-                    DBConnection.clientsServiceEntities.Service.Remove(service);
-                    DBConnection.clientsServiceEntities.SaveChanges();
+                    var result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
-                    Refresh(0);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        DBConnection.clientsServiceEntities.Service.Remove(service);
+                        DBConnection.clientsServiceEntities.SaveChanges();
+                        Refresh(0);
+                    }
                 }
             }
             catch
             {
-                MessageBox.Show("Невозможно удалить запись!", "ОШИБКА!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Невозможно удалить запись!\nНа данную услугу существует запись или дополнительная фотография", "ОШИБКА!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("После удаления записей на данную услугу или дополнительных фотографий услуга удалиться автоматически", "Подсказка", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -205,6 +210,12 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
         {
                 AddServiceWindoww addServiceWindow = new AddServiceWindoww();
                 addServiceWindow.ShowDialog();
+        }
+
+        private void NearestServiceClientsBTN_Click(object sender, RoutedEventArgs e)
+        {
+            NearestServiceClients nearestServiceClients = new NearestServiceClients();
+            nearestServiceClients.Show(); //Окно специально открыто без блокировки основных окон!!!
         }
     }
 }

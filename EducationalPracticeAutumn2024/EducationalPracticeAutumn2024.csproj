@@ -107,6 +107,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\Partials\ClientService.cs" />
     <Compile Include="DB\Partials\Service.cs" />
     <Compile Include="DB\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -163,6 +164,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windowws\NearestServiceClients.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windowws\PasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,6 +191,9 @@
     </Compile>
     <Compile Include="Windowws\EditServiceWindoww.xaml.cs">
       <DependentUpon>EditServiceWindoww.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windowws\NearestServiceClients.xaml.cs">
+      <DependentUpon>NearestServiceClients.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windowws\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>
