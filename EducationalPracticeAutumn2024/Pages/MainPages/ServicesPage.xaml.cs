@@ -100,9 +100,9 @@ namespace EducationalPracticeAutumn2024.Pages.MainPages
             }
 
             if (LessBTN.IsEnabled == true && LargerBTN.IsEnabled == false)
-                filtred = filtred.OrderByDescending(x => x.NewCost);
-            else if (LessBTN.IsEnabled == false && LargerBTN.IsEnabled == true)
                 filtred = filtred.OrderBy(x => x.NewCost);
+            else if (LessBTN.IsEnabled == false && LargerBTN.IsEnabled == true)
+                filtred = filtred.OrderByDescending(x => x.NewCost);
 
             ServicesLV.ItemsSource = filtred.ToList();
             CountRecordTBL.Text = $"{filtred.Count()} из {allService.Count}";
