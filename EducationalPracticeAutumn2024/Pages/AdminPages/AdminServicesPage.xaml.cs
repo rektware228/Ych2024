@@ -187,6 +187,7 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
 
                 Refresh(0);
             }
+            RefreshLV();
         }
 
         private void DeliteServiceBNT_Click(object sender, RoutedEventArgs e) //Удалить
@@ -227,7 +228,20 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                             DBConnection.clientsServiceEntities.SaveChanges();
                         }
                     }
+
+                    LessBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+                    LargerBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+                    LessBTN.IsEnabled = true;
+                    LargerBTN.IsEnabled = true;
+
+                    SearchTB.Text = "";
+
+                    SaleFLTRCB.SelectedIndex = 0;
+
                     Refresh(0);
+                    RefreshLV();
                 }
             }
             catch
@@ -240,6 +254,8 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
         {
             AddServiceWindoww addServiceWindow = new AddServiceWindoww();
             addServiceWindow.ShowDialog();
+            Refresh(0);
+            RefreshLV();
         }
 
         private void NearestServiceClientsBTN_Click(object sender, RoutedEventArgs e)
@@ -258,6 +274,7 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                 AddClientServiceWindow.ShowDialog();
 
                 Refresh(0);
+                RefreshLV();
             }
         }
     }

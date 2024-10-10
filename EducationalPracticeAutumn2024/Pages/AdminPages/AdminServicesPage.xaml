@@ -137,12 +137,7 @@
                   Grid.Column="1" Grid.ColumnSpan="2" 
                   Grid.Row="0" Grid.RowSpan="5"
                   BorderBrush="Black" BorderThickness="2"
-                  Width="1200" Height="800" d:ItemsSource="{d:SampleData ItemCount=100}">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows="100" Columns="1"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+                  Width="1200" Height="800" d:ItemsSource="{Binding services}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="2" BorderBrush="Black" Margin="0" Padding="1">
