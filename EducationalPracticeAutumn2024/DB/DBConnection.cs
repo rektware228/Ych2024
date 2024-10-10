@@ -8,6 +8,7 @@ namespace EducationalPracticeAutumn2024.DB
 {
     internal class DBConnection
     {
-        public static EducationalPracticeAutumn2024Entities clientsServiceEntities = new EducationalPracticeAutumn2024Entities();
+        public static EducationalPracticeAutumn2024Entities clientsServiceEntities 
+            = new EducationalPracticeAutumn2024Entities();
     }
 }
