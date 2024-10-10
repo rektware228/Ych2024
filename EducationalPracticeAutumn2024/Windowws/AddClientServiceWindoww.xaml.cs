@@ -64,12 +64,12 @@ namespace EducationalPracticeAutumn2024.Windowws
                 {
                     if (hour < 0 || hour > 23 || minute < 0 || minute > 59)
                     {
-                        error.AppendLine("Введите корректное время в формате HH:mm!");
+                        error.AppendLine("Введите корректное время в формате Час:Минута!");
                     }
                 }
                 else
                 {
-                    error.AppendLine("Введите корректное время в формате HH:mm!");
+                    error.AppendLine("Введите корректное время в формате Час:Минута!");
                 }
 
 
@@ -93,8 +93,6 @@ namespace EducationalPracticeAutumn2024.Windowws
                     {
 
                         ClientService clientService = new ClientService();
-
-
 
                         clientService.StartTime = startTime;
                         clientService.ServiceID = contextservice.ID;
@@ -145,13 +143,13 @@ namespace EducationalPracticeAutumn2024.Windowws
                 {
                     if (hour < 0 || hour > 23 || minute < 0 || minute > 59)
                     {
-                        MessageBox.Show("Введите корректное время в формате Часы:Минуты!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Введите корректное время в формате Час:Минута!", "", MessageBoxButton.OK, MessageBoxImage.Error);
                         TimeServiceTBL.Text = string.Empty;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Введите корректное время в формате Часы:Минуты!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Введите корректное время в формате Час:Минута!", "", MessageBoxButton.OK, MessageBoxImage.Error);
                     TimeServiceTBL.Text = string.Empty;
                 }
             }

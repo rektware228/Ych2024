@@ -61,60 +61,72 @@ namespace EducationalPracticeAutumn2024.Windowws
                 StringBuilder error = new StringBuilder();
                 Service service = contextservice;
                 if (string.IsNullOrWhiteSpace(NameServiceTB.Text) || CostServiceTB.Text.Trim() == "" || TimeServiceTB.Text.Trim() == "")
-
                 {
                     error.AppendLine("Заполните все поля!");
+                    return;
                 }
-                else if (error.Length > 0)
+                if (error.Length > 0)
                 {
                     MessageBox.Show(error.ToString());
                 }
-                else if (int.Parse(TimeServiceTB.Text) > 240)
+
+                if (int.Parse(TimeServiceTB.Text) > 240)
                 {
                     MessageBox.Show("Занятие не может идти больше 4 часов!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else if (int.Parse(SaleServiceTB.Text) < 0)
+                if (int.Parse(SaleServiceTB.Text) < 0)
                 {
                     MessageBox.Show("Скидка не может быть меньше 0!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else if (int.Parse(SaleServiceTB.Text) > 100)
+                if (int.Parse(SaleServiceTB.Text) > 100)
                 {
                     MessageBox.Show("Скидка не может быть больше 100!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else if (int.Parse(TimeServiceTB.Text) < 0)
+                if (int.Parse(TimeServiceTB.Text) < 0)
                 {
                     MessageBox.Show("Время занятия не может быть отрицательным!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else if(int.Parse(CostServiceTB.Text) < 0)
+                if(int.Parse(CostServiceTB.Text) < 0)
                 {
                     MessageBox.Show("Цена не может быть ниже нуля!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else
+
+                var existingService = DBConnection.clientsServiceEntities.Service.FirstOrDefault(s => s.Title.Equals(NameServiceTB.Text, StringComparison.OrdinalIgnoreCase));
+
+                if (existingService != null && existingService.ID != service.ID)
                 {
-                    var existingService = DBConnection.clientsServiceEntities.Service.FirstOrDefault(s => s.Title.Equals(NameServiceTB.Text, StringComparison.OrdinalIgnoreCase));
-
-                    if (existingService != null && existingService.ID != service.ID)
-                    {
-                        MessageBox.Show("Услуга с таким наименованием уже существует.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-
-                    service.Title = NameServiceTB.Text;
-                    service.Description = DegrServiceTB.Text;
-                    service.Cost = int.Parse(CostServiceTB.Text);
-                    service.Discount = int.Parse(SaleServiceTB.Text);
-                    service.DurationInSeconds = int.Parse(TimeServiceTB.Text) * 60;
-                    DBConnection.clientsServiceEntities.SaveChanges();
-
-                    NameServiceTB.Text = String.Empty;
-                    SaleServiceTB.Text = String.Empty;
-                    DegrServiceTB.Text = String.Empty;
-                    CostServiceTB.Text = String.Empty;
-                    TimeServiceTB.Text = String.Empty;
-
-                    DBConnection.clientsServiceEntities.SaveChanges();
-                    Close();
+                    MessageBox.Show("Услуга с таким наименованием уже существует.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
+                    var result = MessageBox.Show($"Проверьте верность введенных данных:\nНаименование: {NameServiceTB.Text}, \nСтоимость: {CostServiceTB.Text}, " +
+                        $"Скидка:, {SaleServiceTB.Text}, \nДлительность: {TimeServiceTB.Text} минут, \nОписание: {DegrServiceTB.Text}", "",
+                        MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        service.Title = NameServiceTB.Text;
+                        service.Description = DegrServiceTB.Text;
+                        service.Cost = int.Parse(CostServiceTB.Text);
+                        service.Discount = int.Parse(SaleServiceTB.Text);
+                        service.DurationInSeconds = int.Parse(TimeServiceTB.Text) * 60;
+                        DBConnection.clientsServiceEntities.SaveChanges();
+
+                        NameServiceTB.Text = String.Empty;
+                        SaleServiceTB.Text = String.Empty;
+                        DegrServiceTB.Text = String.Empty;
+                        CostServiceTB.Text = String.Empty;
+                        TimeServiceTB.Text = String.Empty;
+
+                        DBConnection.clientsServiceEntities.SaveChanges();
+                        Close();
+                    
+                }      
             }
             catch
             {
@@ -154,7 +166,5 @@ namespace EducationalPracticeAutumn2024.Windowws
             var allPhotoWindow = new AddPhotoPathWindoww(contextservice);
             allPhotoWindow.Show();
         }
-
-
     }
 }

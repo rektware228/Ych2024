@@ -26,15 +26,15 @@
 
 
         <TextBlock Text="Наименование:" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
-        <TextBlock x:Name="TitleServiceTBL" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="50" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10, 65, 0, 0"/>
+        <TextBlock x:Name="TitleServiceTBL" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10, 50, 0, 0"/>
 
-        <TextBlock Text="Длительность (в минутах):" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 00"/>
-        <TextBlock x:Name="TimeServiceTBL" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 15"/>
+        <TextBlock Text="Длительность (в минутах):" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0,0,40"/>
+        <TextBlock x:Name="TimeServiceTBL" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Width="300" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 0, 0"/>
 
         <ComboBox x:Name="ClientsCB" ItemsSource="{Binding clients}"
                   Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
                   VerticalAlignment="Center" HorizontalAlignment="Left"
-                  Width="300" Height="35" Margin="10, 0, 0, 20">
+                  Width="300" Height="55" Margin="10, 0, 0, 25">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -52,7 +52,7 @@
                   Width="200" Height="25" Margin="10, 80, 0, 0"/>
 
         <TextBox  x:Name="TimeClientServiceTB" TextChanged="TimeTbx_TextChanged"           
-                  Grid.Row="2" Grid.Column="3"
+                  Grid.Row="2" Grid.Column="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                   VerticalAlignment="Center" HorizontalAlignment="Left"
                   Width="70" Height="25" Margin="40, 80, 0, 0"
                   PreviewTextInput="TimeTbx_PreviewTextInput"/>

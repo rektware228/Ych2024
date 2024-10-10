@@ -28,9 +28,8 @@ namespace EducationalPracticeAutumn2024.Pages.MainPages
         private void AdminModeBTN_Click(object sender, RoutedEventArgs e)
         {
             PasswordWindow passwordWindow = new PasswordWindow();
-            if (passwordWindow.ShowDialog() == true) // Ожидаем результат
+            if (passwordWindow.ShowDialog() == true)
             {
-                // Если пароль введен правильно, переходим на новую страницу
                 NavigationService.Navigate(new Pages.AdminPages.ServicesPage());
             }
         }

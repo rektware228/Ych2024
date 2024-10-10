@@ -28,6 +28,7 @@ namespace EducationalPracticeAutumn2024.Windowws
         public AddPhotoPathWindoww(Service service)
         {
             InitializeComponent();
+
             contextService = service;
             services = new List<Service>(DBConnection.clientsServiceEntities.Service.ToList());
             servicesPhotos = new List<ServicePhoto>(DBConnection.clientsServiceEntities.ServicePhoto.Where(p => p.ServiceID == contextService.ID).ToList());
@@ -85,8 +86,9 @@ namespace EducationalPracticeAutumn2024.Windowws
                 {
                     DBConnection.clientsServiceEntities.ServicePhoto.Remove(servicePhoto);
                     DBConnection.clientsServiceEntities.SaveChanges();
+                    ServicesPhotosLV.ItemsSource = DBConnection.clientsServiceEntities.ServicePhoto.Where(p => p.ServiceID == contextService.ID).ToList();
 
-                    ServicesPhotosLV.ItemsSource = DBConnection.clientsServiceEntities.ServicePhoto.ToList();
+
                 }
                 catch
                 {
@@ -94,18 +96,21 @@ namespace EducationalPracticeAutumn2024.Windowws
 
                     if (result == MessageBoxResult.OK)
                     {
-                        // Получаем путь к текущему исполняемому файлу
+                        //ПЕРЕЗАПУСК ПРОГРАММЫ
                         string exePath = Process.GetCurrentProcess().MainModule.FileName;
-
-                        // Запускаем новый экземпляр приложения
                         Process.Start(exePath);
-
-                        // Завершаем текущее приложение
                         Application.Current.Shutdown();
                     }
                 }
 
+
+
             }
+        }
+
+        private void Refresh()
+        {
+            servicesPhotos = new List<ServicePhoto>(DBConnection.clientsServiceEntities.ServicePhoto.Where(p => p.ServiceID == contextService.ID).ToList());
         }
     }
 }

@@ -202,7 +202,7 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
 
                     if (hasClientServiceRecords)
                     {
-                        MessageBox.Show("На данную услугу существует запись.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Удаление невозможно!\nНа данную услугу существует запись.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     else if (hasServicePhotos)
@@ -212,7 +212,7 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                         
                         if (result == MessageBoxResult.Yes)
                         {
-                            MessageBox.Show($"На данную услугу прикреплены дополнительные фотографии!\nПосле удаления дополнительных фотографий услуга удалится автоматически.", "", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            MessageBox.Show($"На данную услугу прикреплены дополнительные фотографии!\nПосле удаления дополнительных фотографий услуга удалится автоматически.", "!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                             DBConnection.clientsServiceEntities.Service.Remove(service);
                             DBConnection.clientsServiceEntities.SaveChanges();
                         }
