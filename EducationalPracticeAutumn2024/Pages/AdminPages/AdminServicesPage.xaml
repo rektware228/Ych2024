@@ -220,8 +220,7 @@
                                                 </Button.Resources>
                                             </Button>
 
-                                            <Button x:Name="DeliteServiceBTN" Grid.Row="3" Content="удалить"
-                                                    HorizontalAlignment="Left"
+                                            <Button x:Name="DeliteServiceBTN" Grid.Row="3" Content="удалить" HorizontalAlignment="Left"
                                                     Width="200" Height="45" Margin="350 0 0 0" FontSize="30"
                                                     BorderBrush="Black" BorderThickness="2" Background="#CC05A0FF" 
                                                     Click="DeliteServiceBNT_Click">

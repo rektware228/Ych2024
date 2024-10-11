@@ -41,7 +41,6 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
 
         private void Refresh(int i)
         {
-
             var allService = DBConnection.clientsServiceEntities.Service.ToList();
             var filtred = allService.AsQueryable();
 
@@ -52,45 +51,40 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                 var min_discountValue = 0;
                 var max_discountValue = 5;
 
-                filtred = filtred.Where(x => x.Discount.HasValue &&
-                                               x.Discount.Value >= min_discountValue &&
-                                               x.Discount.Value < max_discountValue);
+                filtred = filtred.Where(x => x.Discount.HasValue && x.Discount.Value >= min_discountValue && 
+                    x.Discount.Value < max_discountValue);
             }
             if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 2)
             {
                 var min_discountValue = 5;
                 var max_discountValue = 15;
 
-                filtred = filtred.Where(x => x.Discount.HasValue &&
-                                               x.Discount.Value >= min_discountValue &&
-                                               x.Discount.Value < max_discountValue);
+                filtred = filtred.Where(x => x.Discount.HasValue && x.Discount.Value >= min_discountValue && 
+                    x.Discount.Value < max_discountValue);
             }
             if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 3)
             {
                 var min_discountValue = 15;
                 var max_discountValue = 30;
 
-                filtred = filtred.Where(x => x.Discount.HasValue &&
-                                               x.Discount.Value >= min_discountValue &&
-                                               x.Discount.Value < max_discountValue);
+                filtred = filtred.Where(x => x.Discount.HasValue && x.Discount.Value >= min_discountValue && 
+                    x.Discount.Value < max_discountValue);
             }
             if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 4)
             {
                 var min_discountValue = 30;
                 var max_discountValue = 70;
 
-                filtred = filtred.Where(x => x.Discount.HasValue &&
-                                               x.Discount.Value >= min_discountValue &&
-                                               x.Discount.Value < max_discountValue);
+                filtred = filtred.Where(x => x.Discount.HasValue && x.Discount.Value >= min_discountValue && 
+                    x.Discount.Value < max_discountValue);
             }
             if (SaleFLTRCB != null && SaleFLTRCB.SelectedIndex == 5)
             {
                 var min_discountValue = 70;
                 var max_discountValue = 100;
 
-                filtred = filtred.Where(x => x.Discount.HasValue &&
-                                               x.Discount.Value >= min_discountValue &&
-                                               x.Discount.Value < max_discountValue);
+                filtred = filtred.Where(x => x.Discount.HasValue && x.Discount.Value >= min_discountValue && 
+                    x.Discount.Value < max_discountValue);
             }
 
             if (!string.IsNullOrWhiteSpace(searchText))
@@ -195,33 +189,34 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
         {
             try
             {
-
                 if (sender is Button button && button.DataContext is Service service)
                 {
-
                     var hasClientServiceRecords = DBConnection.clientsServiceEntities.ClientService.Any(x => x.ServiceID == service.ID);
                     var hasServicePhotos = DBConnection.clientsServiceEntities.ServicePhoto.Any(x => x.ServiceID == service.ID);
 
                     if (hasClientServiceRecords)
                     {
-                        MessageBox.Show("Удаление невозможно!\nНа данную услугу существует запись.", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Удаление невозможно!\nНа данную услугу существует запись.", 
+                            "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     else if (hasServicePhotos)
                     {
-                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
-
-                        
+                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", 
+                            "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
                         if (result == MessageBoxResult.Yes)
                         {
-                            MessageBox.Show($"На данную услугу прикреплены дополнительные фотографии!\nПосле удаления дополнительных фотографий услуга удалится автоматически.", "!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            MessageBox.Show($"На данную услугу прикреплены дополнительные фотографии!" +
+                                $"\nПосле удаления дополнительных фотографий услуга удалится автоматически.", 
+                                "!", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                             DBConnection.clientsServiceEntities.Service.Remove(service);
                             DBConnection.clientsServiceEntities.SaveChanges();
                         }
                     }
                     else
                     {
-                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                        MessageBoxResult result = MessageBox.Show($"Вы действительно хотите удалить услугу {service.Title}?", 
+                            "", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
                         if (result == MessageBoxResult.Yes)
                         {
