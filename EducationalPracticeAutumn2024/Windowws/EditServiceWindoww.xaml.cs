@@ -1,6 +1,7 @@
 ﻿using EducationalPracticeAutumn2024.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,7 +131,15 @@ namespace EducationalPracticeAutumn2024.Windowws
             }
             catch
             {
-                MessageBox.Show("Произошла ошибка!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxResult result = MessageBox.Show("Произошла ошибка!\nНеобходимо перезагрузить программу!", "ОШИБКА", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    //ПЕРЕЗАПУСК ПРОГРАММЫ
+                    string exePath = Process.GetCurrentProcess().MainModule.FileName;
+                    Process.Start(exePath);
+                    Application.Current.Shutdown();
+                }
             }
         }
 

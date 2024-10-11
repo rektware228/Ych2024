@@ -187,6 +187,7 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
 
                 Refresh(0);
             }
+            CleaningtheFilter();
             RefreshLV();
         }
 
@@ -228,17 +229,7 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                             DBConnection.clientsServiceEntities.SaveChanges();
                         }
                     }
-
-                    LessBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
-                    LargerBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
-
-
-                    LessBTN.IsEnabled = true;
-                    LargerBTN.IsEnabled = true;
-
-                    SearchTB.Text = "";
-
-                    SaleFLTRCB.SelectedIndex = 0;
+                    CleaningtheFilter();
 
                     Refresh(0);
                     RefreshLV();
@@ -254,6 +245,7 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
         {
             AddServiceWindoww addServiceWindow = new AddServiceWindoww();
             addServiceWindow.ShowDialog();
+            CleaningtheFilter();
             Refresh(0);
             RefreshLV();
         }
@@ -273,9 +265,24 @@ namespace EducationalPracticeAutumn2024.Pages.AdminPages
                 AddClientService AddClientServiceWindow = new AddClientService(selectedService);
                 AddClientServiceWindow.ShowDialog();
 
+                CleaningtheFilter();
                 Refresh(0);
                 RefreshLV();
             }
+        }
+
+        private void CleaningtheFilter()
+        {
+            LessBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+            LargerBTN.Background = new SolidColorBrush(Color.FromRgb(4, 160, 255));
+
+
+            LessBTN.IsEnabled = true;
+            LargerBTN.IsEnabled = true;
+
+            SearchTB.Text = "";
+
+            SaleFLTRCB.SelectedIndex = 0;
         }
     }
 }
